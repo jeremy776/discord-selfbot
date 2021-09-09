@@ -7,8 +7,8 @@ module.exports.run = async(client, msg, args) => {
   if (!spamMessage) return console.log("Parameter message must be fille");
   if (spamMessage.length > 1900) return console.log("Limit");
 
-  // Spam akan berhenti jika hosting mati.
-  // Spam tidak bisa di berhentikan sampai angka tertentu
+  // Spam tidak bisa di berhentikan sampai angka yang sudah di tentukan.
+  // Jika ingin di stop, restart project.
   for (let i = 0; i < times; i++) {
     msg.channel.send(spamMessage);
   }

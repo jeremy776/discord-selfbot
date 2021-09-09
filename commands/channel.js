@@ -4,7 +4,7 @@ module.exports.run = async(client, msg, args) => {
   let channelList = [];
   let list = guild.channels.cache.filter(x => x.type == "voice");
   list.map(x => {
-    channelList.push(`${x.name} = ${x.id}`);
+    channelList.push(`${x} ・ ${x.id}`);
   });
-  return msg.channel.send(channelList.map(x => `\`\`\`js\n${x}\n\`\`\``).join("\n"));
+  return msg.channel.send(`>>> **LIST VOICE CHANNEL SERVER ${guild.name}**\n\n`+channelList.map((x, i) => `**${i+1}**. ${x}`).join("\n"));
 };
