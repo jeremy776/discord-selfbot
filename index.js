@@ -1,5 +1,10 @@
 const Discord = require("discord.js-selfbot");
 const client = new Discord.Client();
+const fs = require("fs");
+const prefix = "!";
+
+const express = require("express");
+const app = express();
 
 require("dotenv").config();
 
@@ -8,67 +13,20 @@ client.on("ready", async () => {
 });
 
 client.on("message", async (msg) => {
-  if(msg.author.id !== process.env.OWNER || msg.author.bot) return;
+  if (msg.author.id !== process.env.OWNER || msg.author.bot) return;
   
-  let args = msg.content.slice("!".length).split(" ");
+  if(!msg.content.startsWith(prefix)) return;
+  
+  let args = msg.content.slice(prefix.length).split(" ");
   let cmd = args.shift().toLowerCase();
   
-  if(!cmd) return;
-  
-  /* {prefix}join [channel id] */
-  if(cmd == "join") {
-    if(!args[0]) return console.log("Please providevoice channel id");
-    let id = args[0];
-    let channel = client.channels.cache.get(id);
-    if(!channel) return console.log("Channel not found");
-    
-    await channel.join();
-    return console.log("Connect to "+ channel.name);
+  try {
+    let command = require(`./commands/${cmd}`);
+    command.run(client, msg, args);
+  }catch(e) {
+    console.log(e.message);
   }
-  
-  /* {prefix}channel [channel id] */
-  if(cmd == "channel") {
-    let guild = client.guilds.cache.get(args[0]) || msg.guild;
-    if(!guild) return console.log("Make sure you run this command on server");
-    let channelList = [];
-    let list = guild.channels.cache.filter(x => x.type == "voice");
-    list.map(x => {
-      channelList.push(`${x.name} ::: ${x.id}`);
-    });
-    return msg.channel.send(channelList.join("\n"));
-  }
-  
-  /*
-    {prefix}leave [guild id]
-    Leave all channel
-  */
-  if(cmd == "leave") {
-    let guild = msg.guild;
-    if(!guild) return console.log("Guild tidak di temukan");
-    
-    await client.voice.connections.map(x => x.channel.leave());
-    return console.log("Keluar dari voice channel");
-  }
-  
-  /*
-    {prefix}spam [time (berapa kali user akan mengirim pesan)] [message]
-  */
-  if(cmd == "spam") {
-    let times = args[0];
-    if(!times) return console.log("Parameter time must be filled");
-    if(isNaN(times)) return console.log("Invalid number");
-    
-    let spamMessage = args.slice(1).join(" ");
-    if(!spamMessage) return console.log("Parameter message must be fille");
-    if(spamMessage.length > 1900) return console.log("Limit");
-    
-    // Spam akan berhenti jika hosting mati.
-    // Spam tidak bisa di berhentikan sampai angka tertentu
-    for(let i = 0; i < times; i++) {
-      msg.channel.send(spamMessage);
-    }
-  }
-  
 });
-console.log(process.env.TOKEN)
+
+app.listen(3000);
 client.login(process.env.TOKEN);
