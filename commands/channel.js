@@ -9,5 +9,5 @@ module.exports.run = async(client, msg, args) => {
   list.map(x => {
     channelList.push(`${x} ・ ${x.id}`);
   });
-  return msg.channel.send(embed.setTitle(`LIST VOICE CHANNEL SERVER ${guild.name}`).setDescription(">>> "+channelList.map((x, i) => `**${i+1}**. ${x}`).join("\n")).setColor("RANDOM"));
+  return msg.channel.send(embed.setTitle(`List voice channel server ${guild.name}`).setDescription(">>> "+channelList.map((x, i) => `**${i+1}**. ${x}`).join("\n")).setColor("RANDOM"));
 };
