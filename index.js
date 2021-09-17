@@ -7,6 +7,7 @@ const express = require("express");
 const app = express();
 
 require("dotenv").config();
+require("./extendedMessage.js");
 
 client.on("ready", async () => {
   console.log("Yooo your account is online");

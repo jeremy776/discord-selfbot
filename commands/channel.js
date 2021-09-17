@@ -21,25 +21,7 @@ module.exports.run = async(client, msg, args) => {
     channelList.push(`${x} ・ ${x.id}`);
   });
   
-    
-  msg.channel.send(buatEmbed(page, current, channelList, guild)).then(async x => {
-    let newChannelList = channelList.slice(current, current+5);
-    if(newChannelList.length == 0) return;
-    
-    newChannelList.map((y, i) => {
-      x.react(numberEmote[i]);
-    });
-    
-  });
-    let filter = (react, user) => react.emoji.name == numberEmote[0];
-    
-    let collector = msg.createReactionCollector(filter,
-    { time: 60000 });
-    
-    collector.on("collect", (react, user) => {
-      return msg.reply("Hello")
-    })
-  // return msg.channel.send(embed.setTitle(`List voice channel server ${guild.name}`).setDescription(">>> "+channelList.map((x, i) => `**${i+1}**. ${x}`).join("\n")).setColor("RANDOM"));
+  msg.channel.send(buatEmbed(page, current, channelList, guild))
 };
 
 function buatEmbed(page, jumlah, channelList, guild) {
@@ -52,6 +34,7 @@ function buatEmbed(page, jumlah, channelList, guild) {
   let embed = new Discord.MessageEmbed()
   .setTitle("Channel List in "+ guild.name)
   .setColor("RANDOM")
+  .setTimestamp()
   .setFooter(`Page ${page + 1} | Show ${jumlah + 1} - ${jumlah + current.length} of ${channelList.length} channel`)
   .setDescription(current.map((x, i) => `**${i+1}**. ${x}`).join("\n"));
 
