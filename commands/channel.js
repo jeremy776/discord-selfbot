@@ -31,11 +31,21 @@ function buatEmbed(page, jumlah, channelList, guild) {
     .setColor("RED")
     .setDescription("**Not Found**");
   }
+  // get total page
+  let totalPage = channelList.length / 5;
+  let toArrayPage = totalPage.toString().split(".");
+  let newTotalPage;
+  
+  if(toArrayPage[1].length !== 0) {
+    totalPage = Number(toArrayPage[0]) + 1;
+    
+  }
+  
   let embed = new Discord.MessageEmbed()
   .setTitle("Channel List in "+ guild.name)
   .setColor("RANDOM")
   .setTimestamp()
-  .setFooter(`Page ${page + 1} | Show ${jumlah + 1} - ${jumlah + current.length} of ${channelList.length} channel`)
+  .setFooter(`Page ${page + 1} / ${totalPage} | Show ${jumlah + 1} - ${jumlah + current.length} of ${channelList.length} channel`)
   .setDescription(current.map((x, i) => `**${i+1}**. ${x}`).join("\n"));
 
   return embed;
