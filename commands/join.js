@@ -15,10 +15,14 @@ module.exports.run = async(client, msg, args) => {
   if(!urutanChannel) return msg.reply(buatEmbed("Mau masuk channel yg mana?\ngunain `!channel [server id]` untuk liat list nya"));
   
   /* get list */
-  let listChannelDiscord = guild.channels.cache.filter(x => x.type == "voice");
+  let listChannelDiscord = guild.channels.cache.filter(x => x.type == "voice")
+                           .map(x => x.rawPosition)
+                           .sort((a, b) => a - b);
   let listChannel = [];
   listChannelDiscord.map(x => {
-    listChannel.push(x.id);
+    let channelFilter = guild.channels.cache.filter(g => g.type == "voice")
+    .find(g => g.rawPosition == x);
+    listChannel.push(channelFilter.id);
   });
   
   if(listChannel.length < 1) return msg.reply(buatEmbed("ni server gk ada voice channel"));

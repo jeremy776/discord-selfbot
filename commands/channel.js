@@ -16,9 +16,13 @@ module.exports.run = async(client, msg, args) => {
   
   let channelList = [];
   let embed = new Discord.MessageEmbed();
-  let list = guild.channels.cache.filter(x => x.type == "voice");
+  let list = guild.channels.cache.filter(x => x.type == "voice")
+             .map(x => x.rawPosition)
+             .sort((a, b) => a - b);
   list.map(x => {
-    channelList.push(`${x} ・ ${x.id}`);
+    let channelFilter = guild.channels.cache.filter(g => g.type == "voice")
+    .find(g => g.rawPosition == x);
+    channelList.push(`${channelFilter} ・ ${channelFilter.id}`);
   });
   
   msg.channel.send(buatEmbed(page, current, channelList, guild))
