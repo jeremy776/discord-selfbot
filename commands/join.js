@@ -3,7 +3,7 @@ const Discord = require("discord.js-selfbot");
 module.exports.run = async(client, msg, args) => {
   
   let serverID = args[0];
-  if(!serverID) return msg.reply("**Masukin server id yg bener**");
+  if(!serverID) return msg.reply(buatEmbed("**Masukin server id yg bener**"));
   let guild = client.guilds.cache.get(serverID);
   if(!guild) return msg.reply(buatEmbed("**Server gk ketemu, join dlu make `join-server [code invite]`**"));
   let pages = args[1];
