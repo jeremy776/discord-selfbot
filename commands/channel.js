@@ -1,5 +1,4 @@
 const Discord = require("discord.js-selfbot");
-const numberEmote = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"];
 
 module.exports.run = async(client, msg, args) => {
   let idServer = args[0];
