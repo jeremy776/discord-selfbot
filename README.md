@@ -49,6 +49,9 @@ $ npm start
 # Keluar dari voice channel
 ```
 
+### Another command
+
+**Join server with link**
 ```bash
 !join-server <server-invite>
 
@@ -56,5 +59,11 @@ $ npm start
 # - !join-server cgfWad
 ```
 
-# Help us
-- Star nya aja
+**Upload image to server - Must have permission**
+```bash
+!add [upload gambar atau link] [nama]
+
+# Untuk menambahkan emoji dari gambar yang di upload atau link
+```
+
+*Made with ♥️ by Jeremy - Dont forget to star*
